@@ -20,7 +20,7 @@ class TransactionsController < ApplicationController
 
   def payment_response
     PaypalConfirmation.call(params)
-    render nothing: true
+    redirect_to "http://www.cookpad.com"
   end
 
   private
