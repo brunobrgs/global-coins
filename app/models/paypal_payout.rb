@@ -27,7 +27,7 @@ class PaypalPayout
       }
     )
 
-    payout_batch = @payout.create
+    payout_batch = payout.create
     if payout_batch
       transaction.update_attributes!(
         payout_batch_id: payout_batch.batch_header.payout_batch_id,
