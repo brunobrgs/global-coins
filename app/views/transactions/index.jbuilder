@@ -8,4 +8,5 @@ json.transactions @transactions do |transaction|
   json.description transaction.description
   json.recipe_id transaction.recipe_id
   json.destination_user_id transaction.destiny_user.try(:external_id)
+  json.created_at transaction.created_at
 end
