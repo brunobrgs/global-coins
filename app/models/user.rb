@@ -20,7 +20,7 @@ class User < ApplicationRecord
       meta = {}
       meta = { coins: 100, recipe_id: 999 } if value == 'paid'
 
-      self.show_inspire_me = {
+      user.show_inspire_me = {
         value: value,
         meta: meta
       }
