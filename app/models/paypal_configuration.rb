@@ -3,7 +3,7 @@ require 'paypal-sdk-rest'
 module PaypalConfiguration
   include PayPal::SDK::REST
 
-  def set_paypal_config
+  def self.set_paypal_config
     PayPal::SDK::REST.set_config(
       mode: ENV['PAYPAL_MODE'],
       client_id: ENV['CLIENT_ID'],
