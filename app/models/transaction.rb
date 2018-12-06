@@ -91,6 +91,8 @@ class Transaction < ApplicationRecord
   end
 
   def make_remove
+    raise "You need to have at least 10 coins to redeem" if abs_amount < 10
+
     self.amount = -abs_amount
     self.save!
 
