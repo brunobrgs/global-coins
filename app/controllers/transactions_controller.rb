@@ -26,7 +26,7 @@ class TransactionsController < ApplicationController
   private
 
   def user
-    @_user ||= User.find_by(external_id: params[:user_id])
+    @_user ||= User.get(params[:user_id], name: params[:name])
   end
 
   def transaction_params
