@@ -24,4 +24,4 @@ development:
 
 production:
   <<: *default
-  database: global_coins
+  url: <%= ENV["DATABASE_URL"] %>
