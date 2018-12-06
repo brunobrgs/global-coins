@@ -1,5 +1,6 @@
 class TransactionsController < ApplicationController
   def index
+    @user = user
     @transactions = user.transactions.recent
   end
 
