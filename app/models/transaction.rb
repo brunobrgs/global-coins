@@ -15,14 +15,14 @@ class Transaction < ApplicationRecord
   def details
     case operation
     when "add" then
-      "Coins added"
+      "Congratulations. You have added #{amount} coins to your account."
     when "remove" then
-      "Coins removed"
+      "Money for you! You have removed #{amount.abs} coins."
     when "transfer" then
       if origin_transaction
-        "#{amount} coins received from #{origin_transaction.user.name}"
+        "You received #{amount.abs} coins from #{origin_transaction.user.name}"
       else
-        "#{amount} coins sent to #{destiny_user.name}"
+        "You sent #{amount.abs} coins to #{destiny_user.name}"
       end
     end
   end
