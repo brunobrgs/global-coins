@@ -1,7 +1,8 @@
 require 'paypal-sdk-rest'
-include PayPal::SDK::REST
 
 class PaypalPayment
+  include PayPal::SDK::REST
+
   def self.call(transaction, options = {})
     cancel_url = options.delete(:cancel_url) || 'http://www.cookpad.com'
     return_url = options.delete(:return_url)

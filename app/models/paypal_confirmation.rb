@@ -1,7 +1,8 @@
 require 'paypal-sdk-rest'
-include PayPal::SDK::REST
 
 class PaypalConfirmation
+  include PayPal::SDK::REST
+
   def self.call(params)
     transaction = Transaction.find_by(payment_id: params['paymentId'])
     return if transaction.blank?
