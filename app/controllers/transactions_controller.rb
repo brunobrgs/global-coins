@@ -1,7 +1,7 @@
 class TransactionsController < ApplicationController
   def index
     @user = user
-    @transactions = user.transactions.recent
+    @transactions = user.transactions.recent.includes(:destiny_user)
   end
 
   def show
