@@ -46,7 +46,7 @@ class Transaction < ApplicationRecord
 
     self
   rescue RuntimeError => e
-    self.update_attributes(status: "failed")
+    self.status = "failed"
     self.errors.add(:base, e.to_s)
   end
 
