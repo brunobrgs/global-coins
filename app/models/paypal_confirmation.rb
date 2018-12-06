@@ -10,7 +10,12 @@ class PaypalConfirmation
     payment = Payment.find(transaction.payment_id)
     payment.execute(payer_id: params['PayerID'])
     if payment.state == 'approved'
-      transaction.update_columns(status: "success")
+      ApplicationRecord.transaction do
+        transaction.update_attributes!(status: "success")
+        user = transaction.user
+        user.balance += transaction.amount.abs
+        user.save!
+      end
     end
 
     payment
