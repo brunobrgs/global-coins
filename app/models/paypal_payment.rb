@@ -46,7 +46,7 @@ class PaypalPayment
 
     payment.create
     approval_url = payment.links.find{ |v| v.rel == 'approval_url' }.href
-    transaction.update_columns(:payment_id, payment.id, approval_url: approval_url)
+    transaction.update_columns(payment_id: payment.id, approval_url: approval_url)
     payment
   end
 end
