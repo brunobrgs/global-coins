@@ -1,14 +1,10 @@
 class PaypalPayment
-  include PaypalConfiguration
-
   def self.call(transaction, options = {})
     cancel_url = options.delete(:cancel_url) || 'http://www.cookpad.com'
     return_url = options.delete(:return_url)
 
     amount = transaction.amount
     return false if amount <= 0
-
-    set_paypal_config
 
     coin_price = 0.1
     total_price = coin_price * amount
