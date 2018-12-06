@@ -7,12 +7,14 @@ class Transaction < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
 
-  def make(destination_user_id = nil)
+  def make(destination_user_id: nil, payment_response_url: nil)
     return unless valid?
     raise "amount needs to be positive" if amount <= 0
 
     ApplicationRecord.transaction do
       case operation
+      when "add" then
+        make_add(payment_response_url)
       when "transfer" then
         make_transfer(destination_user_id)
       else
@@ -52,5 +54,12 @@ class Transaction < ApplicationRecord
 
     destination_user.balance += abs_amount
     destination_user.save!
+  end
+
+  def make_add(payment_response_url)
+    self.amount = abs_amount
+    self.save!
+
+    PaypalPayment.call(self, payment_response_url)
   end
 end
