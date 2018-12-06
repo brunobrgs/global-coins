@@ -1,5 +1,6 @@
 json.balance @user.balance
-json.array! @transactions do |transaction|
+
+json.transactions @transactions do |transaction|
   json.amount transaction.amount
   json.details transaction.details
   json.description transaction.description
