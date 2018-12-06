@@ -16,6 +16,8 @@ class PaypalConfirmation
         user.balance += transaction.amount.abs
         user.save!
       end
+    else
+      transaction.update_attributes(status: "failed")
     end
 
     payment
