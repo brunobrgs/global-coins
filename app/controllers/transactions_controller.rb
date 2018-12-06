@@ -30,7 +30,7 @@ class TransactionsController < ApplicationController
   private
 
   def user
-    @_user ||= User.get(params[:user_id], name: params[:name])
+    @_user ||= User.get(params[:user_id], name: params[:user_name])
   end
 
   def transaction_params
