@@ -9,7 +9,7 @@ class TransactionsController < ApplicationController
 
   def create
     transaction = user.transactions.new(transaction_params)
-    transaction.make(destination_user_id: params[:destination_user_id], return_url: payment_response_url)
+    transaction.make(destination_user_id: params[:destination_user_id], payment_response_url: payment_response_url)
     if transaction.persisted?
       render json: { id: transaction.id, url: transaction.approval_url }
     else

@@ -79,6 +79,6 @@ class Transaction < ApplicationRecord
     self.amount = abs_amount
     self.save!
 
-    PaypalPayment.call(self, payment_response_url)
+    PaypalPayment.call(self, return_url: payment_response_url)
   end
 end
