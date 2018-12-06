@@ -11,15 +11,15 @@ class TransactionsController < ApplicationController
     transaction = user.transactions.new(transaction_params)
     transaction.make(destination_user_id: params[:destination_user_id], return_url: payment_response_url)
     if transaction.persisted?
-      render json: { id: transaction.id }
+      render json: { id: transaction.id, url: transaction.approval_url }
     else
       render json: { errors: errors(transaction) }, status: 422
     end
   end
 
   def payment_response
-    # PaypalConfirmation.call(params)
-    # render nothing: true
+    PaypalConfirmation.call(params)
+    render nothing: true
   end
 
   private
