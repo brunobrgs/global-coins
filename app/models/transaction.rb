@@ -1,6 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :user
-  belongs_to :origin_transaction, class_name: 'Transaction', foreign_key: 'transaction_id'
+  belongs_to :origin_transaction, class_name: 'Transaction', foreign_key: 'transaction_id', required: false
 
   has_one :destiny_transaction, class_name: 'Transaction', foreign_key: 'transaction_id'
   has_one :destiny_user, through: :destiny_transaction, source: :user
