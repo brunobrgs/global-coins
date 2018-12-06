@@ -1,4 +1,5 @@
 require 'paypal-sdk-rest'
+include PayPal::SDK::REST
 
 class PaypalPayment
   def self.call(transaction, options = {})
