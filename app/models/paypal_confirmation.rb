@@ -4,7 +4,7 @@ class PaypalConfirmation
   include PayPal::SDK::REST
 
   def self.call(params)
-    transaction = Transaction.find_by(payment_id: params['paymentId'])
+    transaction = ::Transaction.find_by(payment_id: params['paymentId'])
     return if transaction.blank?
 
     payment = Payment.find(transaction.payment_id)
