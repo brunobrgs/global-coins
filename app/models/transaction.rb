@@ -1,9 +1,9 @@
 class Transaction < ApplicationRecord
   belongs_to :user
-  belongs_to :origin_transaction, class_name: 'Transaction'
+  belongs_to :origin_transaction, class_name: 'Transaction', foreign_key: 'transaction_id'
 
-  has_many :transactions
-  has_many :users, through: :transactions
+  has_one :destiny_transaction, class_name: 'Transaction', foreign_key: 'transaction_id'
+  has_one :destiny_user, through: :destiny_transaction, source: :user
 
   validates :user_id, :amount, :operation, :status, presence: true
   validates :status, inclusion: { in: %w(pending success failed) }
@@ -21,7 +21,7 @@ class Transaction < ApplicationRecord
       if origin_transaction
         "#{amount} coins received from #{origin_transaction.user.name}"
       else
-        "#{amount} coins sent to #{users.pluck(:name).to_sentence}"
+        "#{amount} coins sent to #{destiny_user.name}"
       end
     end
   end
