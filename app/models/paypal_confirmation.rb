@@ -1,3 +1,5 @@
+require 'paypal-sdk-rest'
+
 class PaypalConfirmation
   def self.call(params)
     transaction = Transaction.find_by(payment_id: params['paymentId'])

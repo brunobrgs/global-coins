@@ -1,3 +1,5 @@
+require 'paypal-sdk-rest'
+
 class PaypalPayment
   def self.call(transaction, options = {})
     cancel_url = options.delete(:cancel_url) || 'http://www.cookpad.com'
