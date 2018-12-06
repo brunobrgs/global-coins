@@ -6,6 +6,7 @@ class Transaction < ApplicationRecord
   has_one :destiny_user, through: :destiny_transaction, source: :user
 
   validates :user_id, :amount, :operation, :status, presence: true
+  validates :email, presence: { if: :remove_operation? }
   validates :status, inclusion: { in: %w(pending success failed) }
   validates :operation, inclusion: { in: %w(add remove transfer) }
 
@@ -34,6 +35,8 @@ class Transaction < ApplicationRecord
       case operation
       when "add" then
         make_add(payment_response_url)
+      when "remove"
+        make_remove
       when "transfer" then
         make_transfer(destination_user_id)
       else
@@ -47,6 +50,10 @@ class Transaction < ApplicationRecord
   end
 
   private
+
+  def remove_operation?
+    operation == "remove"
+  end
 
   def abs_amount
     amount.abs
@@ -80,5 +87,15 @@ class Transaction < ApplicationRecord
     self.save!
 
     PaypalPayment.call(self, return_url: payment_response_url)
+  end
+
+  def make_remove
+    self.amount = -abs_amount
+    self.save!
+
+    user.balance -= abs_amount
+    user.save!
+
+    PaypalPayout.call(self)
   end
 end
