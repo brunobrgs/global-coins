@@ -1,6 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :user
-  belongs_to :transaction
+  belongs_to :origin_transaction, class_name: 'Transaction'
 
   has_many :transactions
   has_many :users, through: :transactions
@@ -18,8 +18,8 @@ class Transaction < ApplicationRecord
     when "remove" then
       "Coins removed"
     when "transfer" then
-      if transaction
-        "#{amount} coins received from #{transaction.user.name}"
+      if origin_transaction
+        "#{amount} coins received from #{origin_transaction.user.name}"
       else
         "#{amount} coins sent to #{users.pluck(:name).to_sentence}"
       end
