@@ -1,11 +1,30 @@
 class Transaction < ApplicationRecord
   belongs_to :user
+  belongs_to :transaction
+
+  has_many :transactions
+  has_many :users, through: :transactions
 
   validates :user_id, :amount, :operation, :status, presence: true
   validates :status, inclusion: { in: %w(pending success failed) }
   validates :operation, inclusion: { in: %w(add remove transfer) }
 
   scope :recent, -> { order(created_at: :desc) }
+
+  def details
+    case operation
+    when "add" then
+      "Coins added"
+    when "remove" then
+      "Coins removed"
+    when "transfer" then
+      if transaction
+        "#{amount} coins received from #{transaction.user.name}"
+      else
+        "#{amount} coins sent to #{users.pluck(:name).to_sentence}"
+      end
+    end
+  end
 
   def make(destination_user_id: nil, payment_response_url: nil)
     return unless valid?

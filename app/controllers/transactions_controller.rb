@@ -29,6 +29,6 @@ class TransactionsController < ApplicationController
   end
 
   def transaction_params
-    params.permit(:amount, :operation, :recipe_id)
+    params.permit(:amount, :operation, :recipe_id, :description)
   end
 end
