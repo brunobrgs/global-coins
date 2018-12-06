@@ -16,7 +16,7 @@ class PaypalPayout
           {
             :recipient_type => 'EMAIL',
             :amount => {
-              :value => value,
+              :value => value.abs,
               :currency => 'GBP'
             },
             :note => 'Thanks for your support!',
@@ -28,7 +28,7 @@ class PaypalPayout
     )
 
     payout_batch = payout.create
-    if payout_batch
+    if payout_batch && payout_batch.batch_header.payout_batch_id
       transaction.update_attributes!(
         payout_batch_id: payout_batch.batch_header.payout_batch_id,
         status: "success"
