@@ -27,7 +27,7 @@ class Transaction < ApplicationRecord
     end
   end
 
-  def make(destination_user_id: nil, payment_response_url: nil)
+  def make(destination_user_id: nil, destination_user_name: nil, payment_response_url: nil)
     return unless valid?
     raise "amount needs to be positive" if amount <= 0
 
@@ -38,7 +38,7 @@ class Transaction < ApplicationRecord
       when "remove"
         make_remove
       when "transfer" then
-        make_transfer(destination_user_id)
+        make_transfer(destination_user_id, destination_user_name)
       else
         raise "invalid operation"
       end
@@ -60,9 +60,9 @@ class Transaction < ApplicationRecord
     amount.abs
   end
 
-  def make_transfer(destination_user_id)
-    destination_user = User.find_by(external_id: destination_user_id)
-    raise "Destination user not found" if destination_user.blank?
+  def make_transfer(destination_user_id, destination_user_name)
+    destination_user = User.get(destination_user_id, name: destination_user_name)
+    raise "Destination user not found" if destination_user.new_record?
 
     self.amount = - abs_amount
     self.status = "success"
