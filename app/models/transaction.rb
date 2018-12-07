@@ -17,7 +17,7 @@ class Transaction < ApplicationRecord
     when "add" then
       "Congratulations. You have added #{amount} coins to your account."
     when "remove" then
-      "Money for you! You have removed #{amount.abs} coins."
+      "Money for you! You have redeemed #{amount.abs} coins."
     when "transfer" then
       if origin_transaction
         "You received #{amount.abs} coins from #{origin_transaction.user.name}"
