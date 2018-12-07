@@ -24,7 +24,7 @@ class TransactionsController < ApplicationController
 
   def payment_response
     PaypalConfirmation.call(params)
-    redirect_to "http://www.cookpad.com"
+    redirect_to "http://www.cookpad.com?payment_attemp=true"
   end
 
   private
