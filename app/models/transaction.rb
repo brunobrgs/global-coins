@@ -15,7 +15,11 @@ class Transaction < ApplicationRecord
   def details
     case operation
     when "add" then
-      "Congratulations. You have added #{amount} coins to your account."
+      if payment_id
+        "Congratulations. You have added #{amount} coins to your account."
+      else
+        "You received #{amount} coins as gift from Cookpad."
+      end
     when "remove" then
       "Money for you! You have redeemed #{amount.abs} coins."
     when "transfer" then
