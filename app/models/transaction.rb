@@ -11,6 +11,7 @@ class Transaction < ApplicationRecord
   validates :operation, inclusion: { in: %w(add remove transfer) }
 
   scope :recent, -> { order(created_at: :desc) }
+  scope :successful, -> { where(status: "success") }
 
   def details
     case operation
