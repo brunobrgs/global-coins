@@ -10,7 +10,7 @@ class User < ApplicationRecord
     user = User.find_or_initialize_by(external_id: id)
 
     if user.new_record?
-      user.name = name
+      user.name = name || "Bob"
       user.balance = 10
       user.save
 
