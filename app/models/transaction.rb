@@ -45,7 +45,7 @@ class Transaction < ApplicationRecord
     end
 
     self
-  rescue RuntimeError => e
+  rescue RuntimeError, ActiveRecord::RecordInvalid => e
     self.status = "failed"
     self.errors.add(:base, e.to_s)
   end
