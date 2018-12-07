@@ -4,7 +4,7 @@ class PaypalPayment
   include PayPal::SDK::REST
 
   def self.call(transaction, options = {})
-    cancel_url = options.delete(:cancel_url) || 'http://www.cookpad.com?cancel=true'
+    cancel_url = options.delete(:cancel_url) || 'http://www.cookpad.com/uk?cancel=true'
     return_url = options.delete(:return_url)
 
     amount = transaction.amount
