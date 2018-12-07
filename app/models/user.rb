@@ -11,10 +11,10 @@ class User < ApplicationRecord
 
     if user.new_record?
       user.name = name
-      user.balance = 10 if user.new_record?
+      user.balance = 10
       user.save
 
-      user.transactions.build(amount: 10, status: "success", operation: "add")
+      user.transactions.create(amount: 10, status: "success", operation: "add") if user.persisted?
     end
 
     if recipe_data
